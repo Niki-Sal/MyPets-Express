@@ -29,6 +29,20 @@ router.get('/:id', (req, res)=> {
     // we will a have a form to make a new animal
   })
 
+  router.post('/:id/addPet', (req, res)=> {
+    db.user.findOne({ where: { id: req.params.id }})
+    .then(user=> {
+      //sequelize method
+      user.createPet({
+        name: req.body.name,
+        species: req.body.species
+      })
+      .then((pet)=> {
+        console.log(pet)
+        res.redirect(`/users/${req.params.id}`)
+      })
+    })
+  })
 
 
 
